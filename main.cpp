@@ -87,10 +87,25 @@ void sailAllTo(int x, int y, vector<Sailable*> sailables) {
     for (auto s : sailables) { s->sailTo(x, y); }
 }
 
+// ponizej rozmiar rosnie az do 16 bo pojawil sie pole wirtualne.
+// dzieje sie tak po kompilator dodaje wskaznik do tablicy fcji wirtualnych
+//kazda klasa ma dodatkowe pole ktore powieksza rozmiar
+class C1
+{
+        int x;
+};
+
+class C2
+{
+    virtual void f1 () {}
+    int x;
+};
+// te klay powyzej i ich odwolanie w main sa dodane dla zwizualizowania "Vtbl" - tablice funkcji wirtualnych
+
 void demo1()
 {
-    cout << "demo2()" << endl;
-    vector<Mobile*> mobiles {
+    cout << "demo1()" << endl;
+    vector<Mobile*> mobiles { //vektor ktorego elementami sa wskazniki do czegos co jest mobilne. zmienna mobiles jest zmienna typu wlasnie takiego vector...
         new Car{},
         new Person {},
         new Ship {},
@@ -122,6 +137,14 @@ void demo1()
 
 int main()
 {
+    C1 c1{};
+    cout << "sizeof (C1) = " << sizeof (C1) << endl;
+    cout << "sizeof (c1) = " << sizeof (c1) << endl;
+
+    C2 c2{};
+    cout << "sizeof (C2) = " << sizeof (C2) << endl;
+    cout << "sizeof (c2) = " << sizeof (c2) << endl;
+
     demo1();
     return 0;
 }
